@@ -1,6 +1,6 @@
 package main
 import "fmt"
- 
+//тестовый comit
 func main() {
     fmt.Println("Hello METANIT.COM!")
 
