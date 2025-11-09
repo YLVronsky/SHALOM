@@ -1,3 +1,4 @@
+# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
 # main.py
 
 import asyncio
@@ -50,4 +51,5 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         # Это может произойти, если Ctrl+C нажат до async.run
+
         pass
