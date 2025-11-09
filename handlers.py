@@ -1,3 +1,4 @@
+# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
 # handlers.py
 
 import asyncio
@@ -142,4 +143,5 @@ def register_handlers(dp: Dispatcher, quiz_manager: QuizManager):
             remove_current_question(user_id)
         else:
             # Опционально: можно дать подсказку или просто игнорировать
+
             await event.message.answer("❌ Неверно. Попробуй ещё раз.")
