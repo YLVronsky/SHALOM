@@ -7,13 +7,12 @@ import signal
 from maxapi import Bot, Dispatcher
 from quiz_manager import QuizManager
 from handlers import register_handlers
+from config import BOT_TOKEN
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 
 # --- Инициализация ---
-# ВНИМАНИЕ: Замените токен на ваш реальный токен бота!
-BOT_TOKEN = 'f9LHodD0cOI9Fh9VVdQ8Jut17WGOoPHZOltK3AEJBmM6ZHcCdN1aqsf1Ab2GAXyvpFYA2wyuA_33yrVCicKp' 
 
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher()
