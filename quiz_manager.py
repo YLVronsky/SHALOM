@@ -1,3 +1,4 @@
+# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
 # quiz_manager.py
 
 import asyncio
@@ -54,4 +55,5 @@ class QuizManager:
         """Останавливает цикл викторины для пользователя."""
         self.active_users.discard(user_id)
         remove_current_question(user_id)
+
         logging.info(f"Quiz stopped for user {user_id}")
