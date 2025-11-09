@@ -1,3 +1,4 @@
+# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
 # storage.py
 
 import json
@@ -65,4 +66,5 @@ def remove_current_question(user_id: str):
         try:
             file_path.unlink()
         except Exception as e:
+
             logging.error(f"Error deleting {file_path}: {e}")
