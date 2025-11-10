@@ -10,7 +10,7 @@ from handlers import register_handlers
 from config import BOT_TOKEN
 
 # Настройка логирования
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.NOTSET)
 
 # --- Инициализация ---
 
@@ -35,7 +35,9 @@ async def main():
     """Главная функция запуска бота."""
     try:
         logging.info("Бот запущен. Ожидание событий...")
+        await bot.delete_webhook()
         await dp.start_polling(bot)
+
     except KeyboardInterrupt:
         pass # Обработаем в finally
     except Exception as e:
