@@ -2,11 +2,16 @@
 # handlers.py
 
 import asyncio
+import logging
+from maxapi import Bot
 import re
 from datetime import datetime, time
 from maxapi import Dispatcher
-from maxapi.types import MessageCreated, Command
+from maxapi.types import MessageCreated, Command, MessageCallback, DialogCleared
+from maxapi.utils.inline_keyboard import InlineKeyboardBuilder
+from maxapi.types import CallbackButton, LinkButton
 from quiz_manager import QuizManager
+
 from storage import (
     save_user_qa, get_user_qa, add_user_qa, remove_user_qa,
     get_current_question, remove_current_question,
@@ -14,6 +19,29 @@ from storage import (
     get_user_stats, update_user_stats, get_question_stats,
     get_default_settings
 )
+def get_main_menu_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.row(
+        CallbackButton(text="📚 Мои вопросы", payload="my_qa"),
+        CallbackButton(text="➕ Добавить вопрос", payload="add_qa_hint")
+    )
+    builder.row(
+        CallbackButton(text="🎯 Запустить викторину", payload="start_quiz"),
+        CallbackButton(text="⏹ Остановить викторину", payload="stop_quiz")
+    )
+    builder.row(
+        CallbackButton(text="⚙️ Настройки", payload="settings"),
+        CallbackButton(text="📊 Статистика", payload="stats")
+    )
+    builder.row(
+        CallbackButton(text="❓ Помощь", payload="help")
+    )
+    return builder.as_markup()
+
+def get_back_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.row(CallbackButton(text="↩️ Назад в меню", payload="main_menu"))
+    return builder.as_markup()
 
 def register_handlers(dp: Dispatcher, quiz_manager: QuizManager):
     """Регистрирует все обработчики сообщений и команд."""
@@ -23,28 +51,15 @@ def register_handlers(dp: Dispatcher, quiz_manager: QuizManager):
     @dp.message_created(Command('start'))
     async def start_command(event: MessageCreated):
         user_id = str(event.from_user.user_id)
-        # Инициализируем файлы пользователя, если их нет
-        settings = get_user_settings(user_id)
-        qa_list = get_user_qa(user_id)
-        
+        get_user_settings(user_id)  # инициализация
+        get_user_qa(user_id)
+
         await event.message.answer(
-            "🎯 **Добро пожаловать в умную викторину!**\n\n"
+            "🎯 **Добро пожаловать в умную викторину!**\n"
             "Я помогу тебе эффективно запоминать информацию с помощью "
             "интервального повторения и адаптивного алгоритма.\n\n"
-            "📚 **Основные команды:**\n"
-            "/add_qa - добавить вопрос-ответ\n"
-            "/my_qa - посмотреть свои вопросы\n"
-            "/clear_qa - очистить все вопросы\n"
-            "/stats - показать статистику\n\n"
-            "⚙️ **Управление викториной:**\n"
-            "/start_quiz - запустить умную викторину\n"
-            "/stop_quiz - остановить викторину\n"
-            "/settings - настройки викторины\n"
-            "/set_daily <число> - изменить дневную цель\n"
-            "/set_interval <мин> <макс> - изменить интервал\n"
-            "/set_schedule - настроить расписание\n\n"
-            "💡 **Совет:** Начни с добавления нескольких вопросов через /add_qa, "
-            "затем настрой параметры через /settings и запусти викторину!"
+            "Выбери действие в меню ниже 👇",
+            attachments=[get_main_menu_keyboard()]
         )
 
     @dp.message_created(Command('help'))
@@ -691,3 +706,71 @@ def register_handlers(dp: Dispatcher, quiz_manager: QuizManager):
                 f"**Твой ответ:** {user_answer}\n\n"
                 "Попробуй еще раз! 💪"
             )
+
+    @dp.message_callback()
+    async def message_callback(callback: MessageCallback):
+        payload = callback.callback.payload  # ← ключевое изменение!
+
+        # Создаём "фейковое" событие для совместимости с вашими командами
+        class FakeEvent:
+            def __init__(self, message, from_user, chat):
+                self.message = message
+                self.from_user = from_user
+                self.chat = chat
+
+        fake_event = FakeEvent(
+            message=callback.message,
+            from_user=callback.from_user,
+            chat=callback.chat
+        )
+
+        match payload:
+            case "main_menu":
+                await callback.message.answer(
+                    "🎯 Вы вернулись в главное меню.",
+                    attachments=[get_main_menu_keyboard()]
+                )
+
+            case "my_qa":
+                await show_my_qa(fake_event)
+
+            case "add_qa_hint":
+                @dp.dialog_cleared()
+                async def dialog_cleared(event: DialogCleared):
+                    print(event.from_user.full_name, 'очистил историю чата с ботом') # type: ignore
+
+                
+
+                await callback.message.answer(
+                    "🎯 **Добро пожаловать в умную викторину!**\n"
+                    "Я помогу тебе эффективно запоминать информацию с помощью "
+                    "интервального повторения и адаптивного алгоритма.\n\n"
+                    "Выбери действие в меню ниже 👇",
+                    attachments=[get_main_menu_keyboard()]
+                )
+                
+                await callback.message.answer(
+                    "📝 Введите вопрос и ответ в формате:\n"
+                    "`/add_qa Вопрос || Ответ`\n"
+                    "**Пример:**\n"
+                    "`/add_qa Столица Франции || Париж`",
+                    attachments=[get_back_keyboard()]
+                )
+
+            case "start_quiz":
+                await start_quiz(fake_event)
+
+            case "stop_quiz":
+                await stop_quiz(fake_event)
+
+            case "settings":
+                await show_settings(fake_event)
+
+            case "stats":
+                await show_stats(fake_event)
+            
+            case "help":
+                await show_stats(fake_event)
+
+            case _:
+                await callback.message.answer("❓ Неизвестная команда.")
