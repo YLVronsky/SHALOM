@@ -23,4 +23,4 @@ USER_SETTINGS = {
     "working_hours_end": "21:00"
 }
 
-VERSION_BOT = "0.3.0"
+VERSION_BOT = "0.4.0"
