@@ -9,3 +9,10 @@
 - Очистка чата после совершения пользователем действия ;
 - Исправление спама при параллельном подключении к боту ;
 
+## Сборка докера
+1. Требуется иметь на личном устройстве Docker Desktop: https://www.docker.com/products/docker-desktop/
+2. Создать файл Dockerfile в папке проекта.
+3. Выполнить в PowerShell следующую команду: `docker build -t shalom-bot .`
+4. Контейнер открывается через следующую команду: `docker run -d --name shalom-bot shalom-bot`
+5. Остановка бота: `docker stop shalom-bot`
+
