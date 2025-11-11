@@ -1,0 +1,24 @@
+2025-11-11 16:41:50,697 | core.logger | INFO | Логгер инициализирован. Лог-файл: bot_data\logs\bot_2025-11-11_16-41-50.log
+2025-11-11 16:41:50,700 | core.logger | INFO | Инициализация сервисов...
+2025-11-11 16:41:50,707 | core.logger | INFO | Бот запущен. Ожидание событий...
+2025-11-11 16:41:50,803 | dispatcher | INFO | Бот: @t75_hakaton_bot first_name=Хакатон 75 id=74579177
+2025-11-11 16:41:50,803 | dispatcher | INFO | 18 событий на обработку
+2025-11-11 16:41:55,996 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-11 16:41:56,072 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:41:57,901 | core.logger | INFO | Получена команда /my_qa от user_id=95639429
+2025-11-11 16:41:57,982 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:42:15,674 | core.logger | INFO | Получена команда /clear_qa от user_id=95639429
+2025-11-11 16:42:15,675 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-11 16:42:15,739 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:42:19,321 | core.logger | INFO | Получена команда /my_qa от user_id=95639429
+2025-11-11 16:42:19,383 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:42:22,132 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:42:32,061 | core.logger | INFO | Получена команда /add_qa от user_id=95639429
+2025-11-11 16:42:32,135 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:42:34,694 | core.logger | INFO | Получена команда /my_qa от user_id=95639429
+2025-11-11 16:42:34,759 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:43:07,259 | core.logger | INFO | Остановка бота...
+2025-11-11 16:43:07,260 | core.logger | INFO | Викторины остановлены. Бот завершил работу.
+2025-11-11 16:43:07,261 | core.logger | INFO | Бот остановлен пользователем
+2025-11-11 16:43:07,273 | asyncio | ERROR | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000000004EA1690>

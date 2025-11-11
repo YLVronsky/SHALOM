@@ -1,0 +1,37 @@
+2025-11-11 16:43:34,610 | core.logger | INFO | Логгер инициализирован. Лог-файл: bot_data\logs\bot_2025-11-11_16-43-34.log
+2025-11-11 16:43:34,610 | core.logger | INFO | Инициализация сервисов...
+2025-11-11 16:43:34,615 | core.logger | INFO | Бот запущен. Ожидание событий...
+2025-11-11 16:43:34,689 | dispatcher | INFO | Бот: @t75_hakaton_bot first_name=Хакатон 75 id=74579177
+2025-11-11 16:43:34,690 | dispatcher | INFO | 18 событий на обработку
+2025-11-11 16:43:45,276 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-11 16:43:45,359 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:43:46,905 | core.logger | INFO | Получена команда /my_qa от user_id=95639429
+2025-11-11 16:43:46,970 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:43:50,386 | core.logger | INFO | Получена команда /help от user_id=95639429
+2025-11-11 16:43:50,469 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:43:53,076 | core.logger | INFO | Получена команда /my_qa от user_id=95639429
+2025-11-11 16:43:53,146 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:43:58,866 | core.logger | INFO | Получена команда /start_quiz от user_id=95639429
+2025-11-11 16:43:58,868 | services.quiz_manager | INFO | Smart quiz started for user 95639429
+2025-11-11 16:43:58,931 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:44:10,092 | core.logger | INFO | Получена команда /stop_quiz от user_id=95639429
+2025-11-11 16:44:10,093 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-11 16:44:10,156 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:44:13,425 | core.logger | INFO | Получена команда /stop_quiz от user_id=95639429
+2025-11-11 16:44:13,492 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:44:18,474 | core.logger | INFO | Получена команда /start_quiz от user_id=95639429
+2025-11-11 16:44:18,476 | services.quiz_manager | INFO | Smart quiz started for user 95639429
+2025-11-11 16:44:18,542 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:44:24,649 | core.logger | INFO | Получена команда /stop_quiz от user_id=95639429
+2025-11-11 16:44:24,649 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-11 16:44:24,725 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:45:04,111 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:47:16,552 | core.logger | INFO | Получена команда /set_interval от user_id=95639429
+2025-11-11 16:47:16,613 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:48:31,379 | core.logger | INFO | Получена команда /set_interval от user_id=95639429
+2025-11-11 16:48:31,452 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-11 16:48:41,806 | core.logger | INFO | Остановка бота...
+2025-11-11 16:48:41,806 | core.logger | INFO | Викторины остановлены. Бот завершил работу.
+2025-11-11 16:48:41,807 | core.logger | INFO | Бот остановлен пользователем
+2025-11-11 16:48:41,819 | asyncio | ERROR | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000000004EA1B50>

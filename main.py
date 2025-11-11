@@ -2,55 +2,51 @@
 # main.py
 
 import asyncio
-import logging
 import signal
 from maxapi import Bot, Dispatcher
-from quiz_manager import QuizManager
-from handlers import register_handlers
-from config import BOT_TOKEN
+from services import Storage, QuizManager, AnalyticsService
+from core.config import config
+from core.logger import logger  # Импортируем из отдельного модуля
 
-# Настройка логирования
-logging.basicConfig(level=logging.NOTSET)
-
-# --- Инициализация ---
-
-bot = Bot(BOT_TOKEN)
-dp = Dispatcher()
-quiz_manager = QuizManager(bot)
-
-# Регистрация всех обработчиков
-register_handlers(dp, quiz_manager)
-
-# --- Запуск и завершение работы ---
-
-async def shutdown():
+async def shutdown(quiz_manager: QuizManager):
     """Корректное завершение работы."""
-    logging.info("Остановка бота...")
-    # Остановка всех активных викторин
+    logger.info("Остановка бота...")
     for user_id in list(quiz_manager.active_users):
         quiz_manager.stop_quiz_for_user(user_id)
-    logging.info("Викторины остановлены. Бот завершил работу.")
+    logger.info("Викторины остановлены. Бот завершил работу.")
 
 async def main():
     """Главная функция запуска бота."""
     try:
-        logging.info("Бот запущен. Ожидание событий...")
+        logger.info("Инициализация сервисов...")
+        
+        # Инициализация сервисов
+        storage = Storage()
+        bot = Bot(config.bot.token)
+        quiz_manager = QuizManager(bot, storage)
+        analytics = AnalyticsService(storage)
+        
+        # Инициализация диспетчера
+        dp = Dispatcher()
+        
+        # Импорт и регистрация обработчиков (после инициализации всех компонентов)
+        from handlers import register_handlers
+        register_handlers(dp, quiz_manager, storage)
+        
+        logger.info("Бот запущен. Ожидание событий...")
         await bot.delete_webhook()
         await dp.start_polling(bot)
 
     except KeyboardInterrupt:
-        pass # Обработаем в finally
+        logger.info("Получен сигнал прерывания")
     except Exception as e:
-        logging.error(f"Bot error: {e}")
+        logger.error(f"Bot error: {e}")
     finally:
-        await shutdown()
+        if 'quiz_manager' in locals():
+            await shutdown(quiz_manager)
 
 if __name__ == '__main__':
-    # Обработка сигнала прерывания (Ctrl+C)
-    signal.signal(signal.SIGINT, lambda s, f: asyncio.create_task(shutdown()))
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        # Это может произойти, если Ctrl+C нажат до async.run
-
-        pass
+        logger.info("Бот остановлен пользователем")
