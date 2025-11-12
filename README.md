@@ -112,6 +112,7 @@ BOT_VERSION=0.4.0
 SHALOM/
 ├─ main.py
 ├─ README.md
+├─ .env
 ├─ core/
 │  ├─ config.py
 │  └─ logger.py
