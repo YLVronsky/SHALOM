@@ -1,0 +1,11 @@
+2025-11-12 17:44:51,529 | core.logger | INFO | Логгер инициализирован. Лог-файл: bot_data\logs\bot_2025-11-12_17-44-51.log
+2025-11-12 17:44:51,530 | core.logger | INFO | Инициализация сервисов...
+2025-11-12 17:44:51,535 | core.logger | INFO | Бот запущен. Ожидание событий...
+2025-11-12 17:44:51,625 | dispatcher | INFO | Бот: @t75_hakaton_bot first_name=Хакатон 75 id=74579177
+2025-11-12 17:44:51,625 | dispatcher | INFO | 18 событий на обработку
+2025-11-12 17:44:59,512 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:46:19,913 | core.logger | INFO | Остановка бота...
+2025-11-12 17:46:19,914 | core.logger | INFO | Викторины остановлены. Бот завершил работу.
+2025-11-12 17:46:19,914 | core.logger | INFO | Бот остановлен пользователем
+2025-11-12 17:46:19,924 | asyncio | ERROR | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000000004E86C50>

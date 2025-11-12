@@ -491,7 +491,7 @@ class CommandHandlers(BaseHandler):
             f"• Среднее время: **{time_text}**\n\n"
             f"⏱ **Время обучения:**\n"
             f"• Всего: **{stats['total_study_time_minutes']}** минут\n"
-            f"• Последнее: {stats['last_study_date'] or 'еще не было'}\n\n"
+            f"• Последнее: {datetime.fromisoformat(stats['last_study_date']).strftime('%d/%m/%Y, %H:%M') if stats.get('last_study_date') else 'еще не было'}\n\n"
             f"📋 Детальная статистика: `/question_stats`"
         )
 

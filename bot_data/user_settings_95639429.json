@@ -1,8 +1,8 @@
 {
-  "active": false,
+  "active": true,
   "daily_goal": 10,
-  "min_interval": 30,
-  "max_interval": 120,
+  "min_interval": 1,
+  "max_interval": 2,
   "schedule": {
     "monday": {
       "start": "09:00",
@@ -42,5 +42,6 @@
   },
   "questions_today": 0,
   "last_question_date": null,
-  "last_reset_date": "2025-11-12"
+  "last_reset_date": "2025-11-12",
+  "last_study_date": "2025-11-12T17:44:41.366436"
 }

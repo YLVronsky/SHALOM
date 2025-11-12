@@ -1,0 +1,73 @@
+2025-11-12 17:44:37,594 | core.logger | INFO | Логгер инициализирован. Лог-файл: bot_data\logs\bot_2025-11-12_17-44-37.log
+2025-11-12 17:44:37,594 | core.logger | INFO | Инициализация сервисов...
+2025-11-12 17:44:37,602 | core.logger | INFO | Бот запущен. Ожидание событий...
+2025-11-12 17:44:37,680 | dispatcher | INFO | Бот: @t75_hakaton_bot first_name=Хакатон 75 id=74579177
+2025-11-12 17:44:37,681 | dispatcher | INFO | 18 событий на обработку
+2025-11-12 17:44:38,520 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:38,522 | core.logger | INFO | Получена команда /settings от user_id=95639429
+2025-11-12 17:44:38,587 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:38,587 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-12 17:44:38,670 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:38,671 | core.logger | INFO | Получена команда /settings от user_id=95639429
+2025-11-12 17:44:38,739 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:38,804 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:38,885 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:38,886 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-12 17:44:38,951 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:38,951 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-12 17:44:39,028 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,028 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-12 17:44:39,096 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,096 | core.logger | INFO | Получена команда /settings от user_id=95639429
+2025-11-12 17:44:39,160 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,224 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,225 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-12 17:44:39,294 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,362 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,362 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-12 17:44:39,436 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,436 | core.logger | INFO | Получена команда /settings от user_id=95639429
+2025-11-12 17:44:39,499 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,582 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,646 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,930 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,998 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:39,998 | core.logger | INFO | Получена команда /stop_quiz от user_id=95639429
+2025-11-12 17:44:40,059 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:40,059 | core.logger | INFO | Получена команда /stop_quiz от user_id=95639429
+2025-11-12 17:44:40,138 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:40,579 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-12 17:44:40,642 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:40,642 | core.logger | INFO | Получена команда /stats от user_id=95639429
+2025-11-12 17:44:40,722 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:40,722 | core.logger | INFO | Получена команда /start от user_id=95639429
+2025-11-12 17:44:40,801 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:40,801 | core.logger | INFO | Получена команда /stats от user_id=95639429
+2025-11-12 17:44:40,875 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:40,875 | core.logger | INFO | Получена команда /start_quiz от user_id=95639429
+2025-11-12 17:44:40,877 | services.quiz_manager | INFO | Smart quiz started for user 95639429
+2025-11-12 17:44:40,952 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:40,952 | core.logger | INFO | Получена команда /stop_quiz от user_id=95639429
+2025-11-12 17:44:40,954 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-12 17:44:41,019 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:41,020 | core.logger | INFO | Получена команда /stats от user_id=95639429
+2025-11-12 17:44:41,084 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:41,084 | core.logger | INFO | Получена команда /start_quiz от user_id=95639429
+2025-11-12 17:44:41,086 | services.quiz_manager | INFO | Smart quiz started for user 95639429
+2025-11-12 17:44:41,151 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:41,151 | core.logger | INFO | Получена команда /stop_quiz от user_id=95639429
+2025-11-12 17:44:41,152 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-12 17:44:41,225 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:41,225 | core.logger | INFO | Получена команда /settings от user_id=95639429
+2025-11-12 17:44:41,301 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:41,302 | core.logger | INFO | Получена команда /set_interval от user_id=95639429
+2025-11-12 17:44:41,365 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:41,365 | core.logger | INFO | Получена команда /start_quiz от user_id=95639429
+2025-11-12 17:44:41,367 | services.quiz_manager | INFO | Smart quiz started for user 95639429
+2025-11-12 17:44:41,427 | dispatcher | INFO | Обработано: router_id: 0 | UpdateType.MESSAGE_CALLBACK | chat_id: 29535084, user_id: 95639429
+2025-11-12 17:44:41,499 | core.logger | INFO | Остановка бота...
+2025-11-12 17:44:41,499 | services.quiz_manager | INFO | Quiz stopped for user 95639429
+2025-11-12 17:44:41,499 | core.logger | INFO | Викторины остановлены. Бот завершил работу.
+2025-11-12 17:44:41,500 | core.logger | INFO | Бот остановлен пользователем
+2025-11-12 17:44:41,513 | asyncio | ERROR | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x00000000031C1F50>

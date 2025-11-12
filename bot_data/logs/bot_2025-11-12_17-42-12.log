@@ -1,0 +1,41 @@
+2025-11-12 17:42:12,165 | core.logger | INFO | Логгер инициализирован. Лог-файл: bot_data\logs\bot_2025-11-12_17-42-12.log
+2025-11-12 17:42:12,165 | core.logger | INFO | Инициализация сервисов...
+2025-11-12 17:42:12,175 | core.logger | INFO | Бот запущен. Ожидание событий...
+2025-11-12 17:42:12,247 | dispatcher | INFO | Бот: @t75_hakaton_bot first_name=Хакатон 75 id=74579177
+2025-11-12 17:42:12,248 | dispatcher | INFO | 18 событий на обработку
+2025-11-12 17:42:14,879 | dispatcher | ERROR | Ошибка при обработке события: router_id: 0 | UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429 | MiddlewareException(middleware=function, router_id=0, process=UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429, context_keys=['data', 'state'], cause=HandlerException: HandlerException(handler=show_stats, router_id=0, process=UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429, context_keys=['data', 'state'], cause=ValueError: time data '2025-11-12T17:30:20.508580' does not match format '%d/%m/%Y, %H:%M')) 
+Traceback (most recent call last):
+  File "C:\Users\YLVronsky\AppData\Local\Programs\Python\Python311\Lib\site-packages\maxapi\dispatcher.py", line 417, in _process_event
+    await handler_chain(event_object, kwargs_filtered)
+  File "C:\Users\YLVronsky\AppData\Local\Programs\Python\Python311\Lib\site-packages\maxapi\dispatcher.py", line 296, in call_handler
+    await handler.func_event(event_object)
+  File "c:\Users\YLVronsky\Documents\GitHub\SHALOM\handlers\stats.py", line 47, in show_stats
+    f"• Последнее: {datetime.strptime(stats['last_study_date'], '%d/%m/%Y, %H:%M') or 'еще не было'}\n\n"
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YLVronsky\AppData\Local\Programs\Python\Python311\Lib\_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YLVronsky\AppData\Local\Programs\Python\Python311\Lib\_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2025-11-12T17:30:20.508580' does not match format '%d/%m/%Y, %H:%M'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\YLVronsky\AppData\Local\Programs\Python\Python311\Lib\site-packages\maxapi\dispatcher.py", line 439, in handle
+    await global_chain(event_object, kwargs)
+  File "C:\Users\YLVronsky\AppData\Local\Programs\Python\Python311\Lib\site-packages\maxapi\dispatcher.py", line 420, in _process_event
+    raise HandlerException(
+maxapi.exceptions.dispatcher.HandlerException: HandlerException(handler=show_stats, router_id=0, process=UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429, context_keys=['data', 'state'], cause=ValueError: time data '2025-11-12T17:30:20.508580' does not match format '%d/%m/%Y, %H:%M')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\YLVronsky\AppData\Local\Programs\Python\Python311\Lib\site-packages\maxapi\dispatcher.py", line 449, in handle
+    raise MiddlewareException(
+maxapi.exceptions.dispatcher.MiddlewareException: MiddlewareException(middleware=function, router_id=0, process=UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429, context_keys=['data', 'state'], cause=HandlerException: HandlerException(handler=show_stats, router_id=0, process=UpdateType.MESSAGE_CREATED | chat_id: 29535084, user_id: 95639429, context_keys=['data', 'state'], cause=ValueError: time data '2025-11-12T17:30:20.508580' does not match format '%d/%m/%Y, %H:%M'))
+2025-11-12 17:44:17,817 | core.logger | INFO | Остановка бота...
+2025-11-12 17:44:17,817 | core.logger | INFO | Викторины остановлены. Бот завершил работу.
+2025-11-12 17:44:17,819 | core.logger | INFO | Бот остановлен пользователем
+2025-11-12 17:44:17,831 | asyncio | ERROR | Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000000003939E10>
