@@ -427,7 +427,7 @@ class CommandHandlers(BaseHandler):
                 "**Статус:** on или off"
             )
 
-    async def reset_settings(self, event: MessageCreated):
+    async def confirm_reset_settings(self, event: MessageCreated):
         """Обработчик команды /reset_settings"""
         user_id = str(event.from_user.user_id)
         
@@ -445,6 +445,14 @@ class CommandHandlers(BaseHandler):
             "Посмотреть настройки: `/settings`\n"
             "Настроить заново: `/set_schedule`"
         )
+
+    async def cancel_reset_settings(self, event: MessageCreated):
+        """Отмена сброса настроек"""
+        await event.message.answer(
+            "❌ **Сброс настроек отменён.**\n\n"
+            "Ваши текущие настройки сохранены.",
+            attachments=[KeyboardManager.get_main_menu_keyboard()]
+    )
 
     async def show_stats(self, event: MessageCreated):
         """Обработчик команды /stats"""
