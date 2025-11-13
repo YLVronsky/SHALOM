@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# base.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 import logging
 from typing import List, Dict, Any
@@ -23,24 +22,23 @@ class MessageFormatter:
     def format_qa_list(qa_list: List[Dict]) -> str:
         """Форматирует список вопросов-ответов"""
         if not qa_list:
-            return "📝 **У тебя пока нет вопросов.**\n\nДобавь первый вопрос:\n`/add_qa Вопрос || Ответ`"
+            return "У тебя пока нет вопросов.\n\nДобавь первый вопрос:\n`/add_qa Вопрос || Ответ`"
 
-        text = f"📚 **Твои вопросы ({len(qa_list)}):**\n\n"
+        text = f"Твои вопросы ({len(qa_list)}):\n\n"
         
         for i, qa in enumerate(qa_list, 1):
-            # Используем валидатор для санитизации текста
             question_text = Validators.sanitize_text(qa['question'], 100)
             answer_text = Validators.sanitize_text(qa['answer'], 50)
             qa_id = qa.get('id', i)
             
-            qa_entry = f"**{i}. ❓ {question_text}**\n   💡 Ответ: {answer_text}\n   🆔 ID: {qa_id}\n\n"
+            qa_entry = f"{i}. {question_text}\n   Ответ: {answer_text}\n   ID: {qa_id}\n\n"
             
             if len(text) + len(qa_entry) > 3500:
                 break
             
             text += qa_entry
 
-        text += "\n💡 **Управление вопросами:**\n"
+        text += "\nУправление вопросами:\n"
         text += "• `/remove_qa <ID>` - удалить вопрос\n"
         text += "• `/clear_qa` - очистить все вопросы"
         
@@ -61,7 +59,7 @@ class MessageFormatter:
         
         schedule_info = []
         for day, schedule in settings["schedule"].items():
-            # Валидируем время расписания
+
             start_time = schedule["start"]
             end_time = schedule["end"]
             
@@ -79,19 +77,17 @@ class MessageFormatter:
     @staticmethod
     def format_quiz_start_message(settings: Dict[str, Any], qa_count: int) -> str:
         """Форматирует сообщение о запуске викторины"""
-        # Валидируем настройки
+
         daily_goal = settings['daily_goal']
         min_interval = settings['min_interval']
         max_interval = settings['max_interval']
-        
-        # Проверяем корректность интервала
+
         interval_valid, interval_error, _ = Validators.validate_interval(min_interval, max_interval)
         if not interval_valid:
             interval_display = "❌ некорректный интервал"
         else:
-            interval_display = f"**{min_interval} - {max_interval}** минут"
-        
-        # Формируем информацию о расписании
+            interval_display = f"{min_interval} - {max_interval} минут"
+
         schedule_text = ""
         enabled_days = [day for day, schedule in settings["schedule"].items() if schedule["enabled"]]
         if enabled_days:
@@ -100,26 +96,25 @@ class MessageFormatter:
                 'thursday': 'Чт', 'friday': 'Пт', 'saturday': 'Сб', 'sunday': 'Вс'
             }
             schedule_days = [days_ru[day] for day in enabled_days]
-            schedule_text = f"• Дни: **{', '.join(schedule_days)}**\n"
-            
-            # Берем первый включенный день для отображения времени
+            schedule_text = f"• Дни: {', '.join(schedule_days)}\n"
+
             sample_day = enabled_days[0]
             start_time = settings['schedule'][sample_day]['start']
             end_time = settings['schedule'][sample_day]['end']
             
             if Validators.validate_time_format(start_time) and Validators.validate_time_format(end_time):
-                schedule_text += f"• Время: **{start_time} - {end_time}**\n"
+                schedule_text += f"• Время: {start_time} - {end_time}\n"
         
         return (
-            "🎯 **Умная викторина запущена!**\n\n"
-            f"📊 **Настройки:**\n"
-            f"• Дневная цель: **{daily_goal}** вопросов\n"
+            "Умная викторина запущена!\n\n"
+            f"Настройки:\n"
+            f"• Дневная цель: {daily_goal} вопросов\n"
             f"• Интервал: {interval_display}\n"
             f"{schedule_text}"
-            f"• Доступно вопросов: **{qa_count}**\n\n"
-            "⏰ Вопросы будут приходить в случайное время в указанном интервале.\n"
-            "📈 Алгоритм адаптируется под твои результаты!\n\n"
-            "**Управление:**\n"
+            f"• Доступно вопросов: {qa_count}\n\n"
+            "Вопросы будут приходить в случайное время в указанном интервале.\n"
+            "Алгоритм адаптируется под твои результаты!\n\n"
+            "Управление:\n"
             "• `/stop_quiz` - остановить викторину\n"
             "• `/settings` - изменить настройки\n"
             "• `/stats` - посмотреть статистику"
@@ -129,28 +124,27 @@ class MessageFormatter:
     def format_settings_message(settings: Dict[str, Any], stats: Dict[str, Any], qa_count: int) -> str:
         """Форматирует сообщение с настройками"""
         schedule_text = MessageFormatter.format_schedule(settings)
-        
-        # Валидируем основные настройки
+
         daily_goal = settings['daily_goal']
         goal_valid, goal_error, _ = Validators.validate_daily_goal(daily_goal)
-        goal_display = f"**{daily_goal}**" if goal_valid else f"❌ {daily_goal} (некорректно)"
+        goal_display = f"{daily_goal}" if goal_valid else f"❌ {daily_goal} (некорректно)"
         
         min_interval = settings['min_interval']
         max_interval = settings['max_interval']
         interval_valid, interval_error, _ = Validators.validate_interval(min_interval, max_interval)
-        interval_display = f"**{min_interval} - {max_interval}**" if interval_valid else f"❌ {min_interval}-{max_interval} (некорректно)"
+        interval_display = f"{min_interval} - {max_interval}" if interval_valid else f"❌ {min_interval}-{max_interval} (некорректно)"
         
         return (
-            "⚙️ **Твои настройки:**\n\n"
-            f"📊 **Основные:**\n"
-            f"• Статус: **{'🟢 Активна' if settings['active'] else '🔴 Остановлена'}**\n"
+            "Твои настройки:\n\n"
+            f"Основные:\n"
+            f"• Статус: {'🟢 Активна' if settings['active'] else '🔴 Остановлена'}\n"
             f"• Дневная цель: {goal_display} вопросов\n"
             f"• Интервал: {interval_display} минут\n"
-            f"• Вопросов сегодня: **{settings['questions_today']}**\n\n"
-            f"📚 **Вопросы:**\n"
-            f"• Всего вопросов: **{qa_count}**\n\n"
-            f"⏰ **Расписание:**\n{schedule_text}\n\n"
-            f"🔧 **Команды для настройки:**\n"
+            f"• Вопросов сегодня: {settings['questions_today']}\n\n"
+            f"Вопросы:\n"
+            f"• Всего вопросов: {qa_count}\n\n"
+            f"Расписание:\n{schedule_text}\n\n"
+            f"Команды для настройки:\n"
             "• `/set_daily <число>` - изменить цель\n"
             "• `/set_interval <мин> <макс>` - интервал\n"
             "• `/set_schedule` - настроить расписание\n"

@@ -1,12 +1,10 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# config.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 import os
 from dataclasses import dataclass
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Загружаем переменные окружения из .env файла
 load_dotenv()
 
 @dataclass
@@ -17,7 +15,7 @@ class DatabaseConfig:
 @dataclass
 class QuizConfig:
     """Конфигурация викторины"""
-    empty_qa_interval: int = int(os.getenv('EMPTY_QA_INTERVAL', '60'))  # секунды при отсутствии вопросов
+    empty_qa_interval: int = int(os.getenv('EMPTY_QA_INTERVAL', '60'))
 
 @dataclass
 class BotConfig:
@@ -32,10 +30,8 @@ class Config:
     """
     
     def __init__(self):
-        # Проверяем обязательные переменные
         self._validate_required_env_vars()
         
-        # Инициализируем конфигурации
         self.bot = BotConfig()
         self.database = DatabaseConfig()
         self.quiz = QuizConfig()
@@ -68,17 +64,14 @@ class Config:
         }
 
 
-# Создаем экземпляр конфигурации
 config = Config()
 
-# Сохраняем обратную совместимость с существующим кодом
 BOT_TOKEN = config.bot.token
 DATA_DIR = config.database.data_dir
 EMPTY_QA_INTERVAL = config.quiz.empty_qa_interval
 VERSION_BOT = config.bot.version
 
 
-# Для обратной совместимости с USER_SETTINGS из старого config.py
 USER_SETTINGS = {
     "max_questions_per_day": 20,
     "min_interval_minutes": 30,

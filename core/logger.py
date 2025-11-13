@@ -1,5 +1,5 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# core/logger.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
+
 import logging
 import sys
 from datetime import datetime
@@ -8,12 +8,10 @@ from core.config import config
 
 def setup_logger():
     """Настройка логгера для всего приложения"""
-    
-    # Создаем путь к лог-файлу в директории data_dir
+
     log_dir = Path(config.database.data_dir) / "logs"
-    log_dir.mkdir(exist_ok=True, parents=True)  # Создаем директорию и все родительские, если они не существуют
-    
-    # Генерируем безопасное имя файла для Windows
+    log_dir.mkdir(exist_ok=True, parents=True)
+
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     log_file = log_dir / f"bot_{timestamp}.log"
     
@@ -31,5 +29,4 @@ def setup_logger():
     
     return logger
 
-# Создаем глобальный логгер
 logger = setup_logger()

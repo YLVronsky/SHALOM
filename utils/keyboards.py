@@ -1,9 +1,8 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# keyboards.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 from maxapi.utils.inline_keyboard import InlineKeyboardBuilder
-from maxapi.types import CallbackButton, LinkButton
-from typing import List, Optional
+from maxapi.types import CallbackButton
+from typing import List
 
 class KeyboardManager:
     """Менеджер клавиатур для бота"""
@@ -182,7 +181,7 @@ class KeyboardManager:
                 builder.row(*row)
                 row = []
         
-        if row:  # Добавляем оставшиеся кнопки
+        if row:
             builder.row(*row)
         
         return builder.as_markup()

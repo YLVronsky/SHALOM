@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# callbacks.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 from maxapi.types import MessageCallback
 from .base import BaseHandler
@@ -12,7 +11,6 @@ class CallbackHandlers(BaseHandler):
         """Основной обработчик callback-ов"""
         payload = callback.callback.payload
 
-        # Создаём "фейковое" событие для совместимости с обработчиками команд
         fake_event = self._create_fake_event(callback)
 
         match payload:
@@ -61,16 +59,16 @@ class CallbackHandlers(BaseHandler):
     async def _main_menu(self, callback: MessageCallback):
         """Обработчик возврата в главное меню"""
         await callback.message.answer(
-            "🎯 Вы вернулись в главное меню.",
+            "Вы вернулись в главное меню.",
             attachments=[KeyboardManager.get_main_menu_keyboard()]
         )
 
     async def _add_qa_hint(self, callback: MessageCallback):
         """Обработчик подсказки добавления вопроса"""
         await callback.message.answer(
-            "📝 Введите вопрос и ответ в формате:\n"
+            "Введите вопрос и ответ в формате:\n"
             "`/add_qa Вопрос || Ответ`\n"
-            "**Пример:**\n"
+            "Пример:\n"
             "`/add_qa Столица Франции || Париж`",
             attachments=[KeyboardManager.get_back_keyboard()]
         )

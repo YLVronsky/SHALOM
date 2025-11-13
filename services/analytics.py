@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# analytics.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 import logging
 from datetime import datetime
@@ -61,8 +60,7 @@ class AnalyticsService:
         else:
             correct_rate = 0
             avg_response_time = 0
-        
-        # Анализ сложности вопросов
+
         question_difficulty = {}
         for qa in qa_list:
             qa_id = qa.get('id')

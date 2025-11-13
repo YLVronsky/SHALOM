@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# storage.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 import json
 import logging
@@ -16,19 +15,22 @@ class Storage:
         self.data_dir.mkdir(exist_ok=True)
         self.logger = logging.getLogger(__name__)
 
-    # --- Вспомогательные методы ---
     
     def _user_qa_file(self, user_id: str) -> Path:
-        return self.data_dir / f"user_{user_id}.json"
+        data_dir = self.data_dir / f"user_{user_id}"
+        return data_dir / f"user_{user_id}.json"
 
     def _current_question_file(self, user_id: str) -> Path:
-        return self.data_dir / f"current_{user_id}.json"
+        data_dir = self.data_dir / f"user_{user_id}"
+        return data_dir / f"current_{user_id}.json"
 
     def _user_settings_file(self, user_id: str) -> Path:
-        return self.data_dir / f"user_settings_{user_id}.json"
+        data_dir = self.data_dir / f"user_{user_id}"
+        return data_dir / f"user_settings_{user_id}.json"
 
     def _user_stats_file(self, user_id: str) -> Path:
-        return self.data_dir / f"user_stats_{user_id}.json"
+        data_dir = self.data_dir / f"user_{user_id}"
+        return data_dir / f"user_stats_{user_id}.json"
 
     def _load_json_file(self, file_path: Path) -> Any:
         try:
@@ -48,7 +50,6 @@ class Storage:
             self.logger.error(f"Error saving {file_path}: {e}")
             return False
 
-    # --- Настройки пользователя ---
     
     def get_default_settings(self) -> Dict[str, Any]:
         return {
@@ -66,8 +67,7 @@ class Storage:
         settings = self._load_json_file(self._user_settings_file(user_id))
         if not settings:
             return self.get_default_settings()
-        
-        # Проверяем, нужно ли сбросить дневной счетчик
+
         if settings.get('last_reset_date') != date.today().isoformat():
             settings['questions_today'] = 0
             settings['last_reset_date'] = date.today().isoformat()
@@ -83,7 +83,6 @@ class Storage:
         settings.update(kwargs)
         return self.save_user_settings(user_id, settings)
 
-    # --- Вопросы-ответы ---
     
     def save_user_qa(self, user_id: str, qa_list: List[Dict]) -> bool:
         return self._save_json_file(self._user_qa_file(user_id), qa_list)
@@ -107,7 +106,6 @@ class Storage:
         qa_list = [qa for qa in qa_list if qa.get('id') != qa_id]
         return self.save_user_qa(user_id, qa_list)
 
-    # --- Текущий вопрос ---
     
     def save_current_question(self, user_id: str, question_data: Dict[str, Any]) -> bool:
         question_data['asked_at'] = datetime.now().isoformat()
@@ -127,7 +125,6 @@ class Storage:
                 self.logger.error(f"Error deleting {file_path}: {e}")
         return False
 
-    # --- Статистика ---
     
     def get_default_stats(self) -> Dict[str, Any]:
         return {
@@ -152,8 +149,7 @@ class Storage:
     def update_user_stats(self, user_id: str, question_id: int = None, correct: bool = None, 
                          response_time: float = None, quality: int = None) -> bool:
         stats = self.get_user_stats(user_id)
-        
-        # Основная статистика
+
         stats["total_questions_answered"] += 1
         if correct:
             stats["correct_answers"] += 1
@@ -162,13 +158,11 @@ class Storage:
         else:
             stats["incorrect_answers"] += 1
             stats["current_streak"] = 0
-        
-        # Обновляем среднее время ответа
+
         if response_time is not None:
             total_time = stats["average_response_time"] * (stats["total_questions_answered"] - 1)
             stats["average_response_time"] = (total_time + response_time) / stats["total_questions_answered"]
-        
-        # Статистика по конкретному вопросу
+
         if question_id is not None:
             if str(question_id) not in stats["question_stats"]:
                 stats["question_stats"][str(question_id)] = {
@@ -221,7 +215,6 @@ class Storage:
             "last_reviewed": None
         })
 
-    # --- Администрирование ---
     
     def reset_daily_counters(self) -> int:
         reset_count = 0

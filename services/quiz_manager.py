@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# quiz_manager.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 import asyncio
 import logging
@@ -28,20 +27,17 @@ class QuizManager:
         
         while user_id in self.active_users:
             settings = self.storage.get_user_settings(user_id)
-            
-            # Проверяем лимиты и расписание
+
             if not self._can_send_question_now(user_id, settings):
-                await asyncio.sleep(300)  # Проверяем каждые 5 минут
+                await asyncio.sleep(300)
                 continue
-            
-            # Выбираем интервал на основе алгоритма
+
             interval = await self._calculate_next_interval(user_id, settings)
             await asyncio.sleep(interval)
             
             if user_id not in self.active_users:
                 break
-                
-            # Проверяем еще раз перед отправкой
+
             if self._can_send_question_now(user_id, settings):
                 await self._send_smart_question(user_id, chat_id)
         
@@ -51,12 +47,10 @@ class QuizManager:
     def _can_send_question_now(self, user_id: str, settings: Dict) -> bool:
         """Проверяет, можно ли отправить вопрос сейчас"""
         now = datetime.now()
-        
-        # Проверяем дневной лимит
+
         if settings["questions_today"] >= settings["daily_goal"]:
             return False
-        
-        # Проверяем день недели и время
+
         weekday = now.strftime("%A").lower()
         day_schedule = settings["schedule"][weekday]
         
@@ -71,27 +65,21 @@ class QuizManager:
 
     async def _calculate_next_interval(self, user_id: str, settings: Dict) -> int:
         """Рассчитывает интервал до следующего вопроса на основе алгоритма"""
-        base_min = settings["min_interval"] * 60  # в секунды
+        base_min = settings["min_interval"] * 60
         base_max = settings["max_interval"] * 60
-        
-        # Получаем статистику для адаптивного интервала
+
         stats = self.storage.get_user_stats(user_id)
         
         if stats["total_questions_answered"] == 0:
-            # Первые вопросы - более частые
             return random.randint(base_min // 2, base_max // 2)
         
-        # Адаптируем интервал на основе успеваемости
         correct_rate = stats["correct_answers"] / stats["total_questions_answered"]
         
         if correct_rate < 0.5:
-            # Низкая успеваемость - уменьшаем интервал
             adjustment = 0.7
         elif correct_rate < 0.8:
-            # Средняя успеваемость - стандартный интервал
             adjustment = 1.0
         else:
-            # Высокая успеваемость - увеличиваем интервал
             adjustment = 1.3
         
         adjusted_min = int(base_min * adjustment)
@@ -106,12 +94,10 @@ class QuizManager:
             await self._handle_empty_questions(user_id, chat_id)
             return
         
-        # Выбираем вопрос по алгоритму
         qa = self._select_question_by_algorithm(user_id, qa_list)
         if not qa:
             return
         
-        # Обновляем время последнего просмотра вопроса
         question_id = qa.get('id')
         if question_id:
             self.storage.update_question_last_reviewed(user_id, question_id)
@@ -121,10 +107,9 @@ class QuizManager:
         try:
             await self.bot.send_message(
                 chat_id=chat_id, 
-                text=f"❓ **Вопрос:** {qa['question']}"
+                text=f"❓ Вопрос: {qa['question']}"
             )
             
-            # Обновляем счетчики
             settings = self.storage.get_user_settings(user_id)
             new_questions_today = settings.get("questions_today", 0) + 1
 
@@ -134,7 +119,6 @@ class QuizManager:
                 last_question_date=datetime.now().isoformat()
             )
 
-            # ✅ Обновляем статистику обучения
             stats = self.storage.get_user_stats(user_id)
             last_time = stats.get("last_study_date")
             if last_time:
@@ -159,57 +143,48 @@ class QuizManager:
         if not qa_list:
             return None
         
-        # Если вопросов мало, выбираем случайно
         if len(qa_list) <= 3:
             return random.choice(qa_list)
         
-        # Рассчитываем веса для каждого вопроса
         weights = []
         for qa in qa_list:
             weight = self._calculate_question_weight(user_id, qa)
             weights.append(weight)
         
-        # Выбираем вопрос с учетом весов
         total_weight = sum(weights)
         if total_weight == 0:
             return random.choice(qa_list)
-        
-        # Нормализуем веса
+
         normalized_weights = [w / total_weight for w in weights]
-        
-        # Взвешенный случайный выбор
+
         return random.choices(qa_list, weights=normalized_weights, k=1)[0]
 
     def _calculate_question_weight(self, user_id: str, qa: Dict) -> float:
         """Рассчитывает вес вопроса для алгоритма выбора"""
         question_id = qa.get('id')
         if not question_id:
-            return 1.0  # Вес по умолчанию для вопросов без ID
+            return 1.0
         
         stats = self.storage.get_question_stats(user_id, question_id)
         times_asked = stats.get('times_asked', 0)
         times_correct = stats.get('times_correct', 0)
         last_quality = stats.get('last_quality', 0)
         last_reviewed = stats.get('last_reviewed')
-        
-        # Базовый вес
+
         weight = 1.0
-        
-        # Фактор новизны - новые вопросы имеют больший вес
+
         if times_asked == 0:
-            weight *= 3.0  # Новые вопросы в 3 раза вероятнее
-        
-        # Фактор сложности - вопросы с низкой успеваемостью имеют больший вес
+            weight *= 3.0
+
         if times_asked > 0:
             success_rate = times_correct / times_asked
             if success_rate < 0.3:
-                weight *= 2.5  # Сложные вопросы
+                weight *= 2.5
             elif success_rate < 0.7:
-                weight *= 1.5  # Средние вопросы
+                weight *= 1.5
             else:
-                weight *= 0.7  # Легкие вопросы
-        
-        # Фактор времени - давно не задаваемые вопросы имеют больший вес
+                weight *= 0.7
+
         if last_reviewed:
             last_review_date = datetime.fromisoformat(last_reviewed)
             days_since_review = (datetime.now() - last_review_date).days
@@ -220,14 +195,13 @@ class QuizManager:
                 weight *= 2.0
             elif days_since_review > 1:
                 weight *= 1.5
-        
-        # Фактор качества последнего ответа
+
         if last_quality <= 2:
-            weight *= 2.0  # Плохой ответ - повторить скорее
+            weight *= 2.0
         elif last_quality >= 4:
-            weight *= 0.6  # Хороший ответ - можно подождать
+            weight *= 0.6
         
-        return max(0.1, weight)  # Минимальный вес чтобы все вопросы имели шанс
+        return max(0.1, weight)
 
     async def _handle_empty_questions(self, user_id: str, chat_id: str):
         """Обрабатывает ситуацию, когда у пользователя нет вопросов"""
@@ -235,7 +209,7 @@ class QuizManager:
             await self.bot.send_message(
                 chat_id=chat_id, 
                 text=(
-                    "📝 **У тебя нет вопросов для викторины!**\n\n"
+                    "У тебя нет вопросов для викторины!\n\n"
                     "Добавь вопросы через команду:\n"
                     "`/add_qa Вопрос || Ответ`\n\n"
                     "Например:\n"
@@ -243,7 +217,6 @@ class QuizManager:
                 )
             )
             
-            # Делаем паузу перед следующей проверкой
             await asyncio.sleep(config.quiz.empty_qa_interval)
             
         except Exception as e:
@@ -273,15 +246,13 @@ class QuizManager:
         settings = self.storage.get_user_settings(user_id)
         now = datetime.now()
         
-        # Проверяем расписание на сегодня
         weekday = now.strftime("%A").lower()
         day_schedule = settings["schedule"][weekday]
         
         if not day_schedule["enabled"]:
             next_day = self._find_next_available_day(weekday, settings)
             return f"следующий доступный день: {next_day}"
-        
-        # Проверяем время
+
         current_time = now.time()
         start_time = datetime.strptime(day_schedule["start"], "%H:%M").time()
         end_time = datetime.strptime(day_schedule["end"], "%H:%M").time()
@@ -308,8 +279,7 @@ class QuizManager:
         }
         
         current_index = days.index(current_day)
-        
-        # Ищем следующий доступный день
+
         for i in range(1, 8):
             next_day_index = (current_index + i) % 7
             next_day = days[next_day_index]

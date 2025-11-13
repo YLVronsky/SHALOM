@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# stats.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseny
 
 from maxapi.types import MessageCreated
 from .base import BaseHandler
@@ -14,8 +13,7 @@ class StatsHandlers(BaseHandler):
         stats = self.storage.get_user_stats(user_id)
         settings = self.storage.get_user_settings(user_id)
         qa_count = len(self.storage.get_user_qa(user_id))
-        
-        # Рассчитываем проценты
+
         total_answered = stats['total_questions_answered']
         if total_answered > 0:
             correct_percent = (stats['correct_answers'] / total_answered) * 100
@@ -23,29 +21,28 @@ class StatsHandlers(BaseHandler):
         else:
             correct_percent = 0
             avg_response_time = 0
-        
-        # Форматируем время
+
         if avg_response_time < 60:
             time_text = f"{avg_response_time:.1f} сек"
         else:
             time_text = f"{avg_response_time/60:.1f} мин"
         
         await event.message.answer(
-            "📊 **Твоя статистика:**\n\n"
-            f"🎯 **Обучение:**\n"
-            f"• Всего вопросов: **{qa_count}**\n"
-            f"• Вопросов сегодня: **{settings['questions_today']}/{settings['daily_goal']}**\n"
-            f"• Статус: **{'🟢 Активно' if settings['active'] else '🔴 Остановлено'}**\n\n"
-            f"📈 **Результаты:**\n"
-            f"• Всего ответов: **{total_answered}**\n"
-            f"• Правильных: **{stats['correct_answers']}** ({correct_percent:.1f}%)\n"
-            f"• Текущая серия: **{stats['current_streak']}**\n"
-            f"• Лучшая серия: **{stats['best_streak']}**\n"
-            f"• Среднее время: **{time_text}**\n\n"
-            f"⏱ **Время обучения:**\n"
-            f"• Всего: **{stats['total_study_time_minutes']}** минут\n"
+            "Твоя статистика:\n\n"
+            f"Обучение:\n"
+            f"• Всего вопросов: {qa_count}\n"
+            f"• Вопросов сегодня: {settings['questions_today']}/{settings['daily_goal']}\n"
+            f"• Статус: {'🟢 Активно' if settings['active'] else '🔴 Остановлено'}\n\n"
+            f"Результаты:\n"
+            f"• Всего ответов: {total_answered}\n"
+            f"• Правильных: {stats['correct_answers']} ({correct_percent:.1f}%)\n"
+            f"• Текущая серия: {stats['current_streak']}\n"
+            f"• Лучшая серия: {stats['best_streak']}\n"
+            f"• Среднее время: {time_text}\n\n"
+            f"Время обучения:\n"
+            f"• Всего: {stats['total_study_time_minutes']} минут\n"
             f"• Последнее: {datetime.fromisoformat(stats['last_study_date']).strftime('%d/%m/%Y, %H:%M') if stats.get('last_study_date') else 'еще не было'}\n\n"
-            f"📋 Детальная статистика: `/question_stats`"
+            f" Детальная статистика: `/question_stats`"
         )
 
     async def show_question_stats(self, event: MessageCreated):
@@ -55,12 +52,12 @@ class StatsHandlers(BaseHandler):
         stats = self.storage.get_user_stats(user_id)
         
         if not qa_list:
-            await event.message.answer("📝 У тебя пока нет вопросов для статистики.")
+            await event.message.answer("У тебя пока нет вопросов для статистики.")
             return
         
-        text = "📋 **Статистика по вопросам:**\n\n"
+        text = "Статистика по вопросам:\n\n"
         
-        for i, qa in enumerate(qa_list[:10], 1):  # Показываем первые 10
+        for i, qa in enumerate(qa_list[:10], 1):
             qa_id = qa.get('id', i)
             q_stats = self.storage.get_question_stats(user_id, qa_id)
             
@@ -75,13 +72,13 @@ class StatsHandlers(BaseHandler):
                 success_emoji = "⚪"
                 success_text = "еще не задан"
             
-            text += f"{success_emoji} **{qa['question']}**\n"
+            text += f"{success_emoji} {qa['question']}\n"
             text += f"   Успешность: {success_text} ({times_correct}/{times_asked})\n\n"
         
         if len(qa_list) > 10:
             text += f"*... и еще {len(qa_list) - 10} вопросов*\n\n"
         
-        text += "💡 **Обозначения:**\n"
+        text += "💡 Обозначения:\n"
         text += "🟢 >80% 🟡 50-80% 🔴 <50% ⚪ не задавался"
         
         await event.message.answer(text)
