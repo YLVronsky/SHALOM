@@ -79,7 +79,6 @@ docker stop shalom-bot
 
 Пример `.env`:
 ```
-BOT_TOKEN=123456:ABC-DEF...
 BOT_TOKEN=...
 DATA_DIR=bot_data
 EMPTY_QA_INTERVAL=60
