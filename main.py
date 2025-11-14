@@ -1,12 +1,11 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# main.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseniy
 
 import asyncio
 import signal
 from maxapi import Bot, Dispatcher
 from services import Storage, QuizManager, AnalyticsService
 from core.config import config
-from core.logger import logger  # Импортируем из отдельного модуля
+from core.logger import logger 
 
 async def shutdown(quiz_manager: QuizManager):
     """Корректное завершение работы."""
@@ -20,16 +19,13 @@ async def main():
     try:
         logger.info("Инициализация сервисов...")
         
-        # Инициализация сервисов
         storage = Storage()
         bot = Bot(config.bot.token)
         quiz_manager = QuizManager(bot, storage)
         analytics = AnalyticsService(storage)
         
-        # Инициализация диспетчера
         dp = Dispatcher()
         
-        # Импорт и регистрация обработчиков (после инициализации всех компонентов)
         from handlers import register_handlers
         register_handlers(dp, quiz_manager, storage)
         

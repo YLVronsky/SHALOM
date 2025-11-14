@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# storage.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseniy
 
 import json
 import logging
@@ -67,7 +66,6 @@ class Storage:
         if not settings:
             return self.get_default_settings()
         
-        # Проверяем, нужно ли сбросить дневной счетчик
         if settings.get('last_reset_date') != date.today().isoformat():
             settings['questions_today'] = 0
             settings['last_reset_date'] = date.today().isoformat()
@@ -153,7 +151,6 @@ class Storage:
                          response_time: float = None, quality: int = None) -> bool:
         stats = self.get_user_stats(user_id)
         
-        # Основная статистика
         stats["total_questions_answered"] += 1
         if correct:
             stats["correct_answers"] += 1
@@ -163,12 +160,10 @@ class Storage:
             stats["incorrect_answers"] += 1
             stats["current_streak"] = 0
         
-        # Обновляем среднее время ответа
         if response_time is not None:
             total_time = stats["average_response_time"] * (stats["total_questions_answered"] - 1)
             stats["average_response_time"] = (total_time + response_time) / stats["total_questions_answered"]
         
-        # Статистика по конкретному вопросу
         if question_id is not None:
             if str(question_id) not in stats["question_stats"]:
                 stats["question_stats"][str(question_id)] = {

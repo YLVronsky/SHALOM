@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# validators.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseniy
 
 import re
 from typing import Tuple, Optional, Dict, Any
@@ -8,7 +7,6 @@ from datetime import datetime
 class Validators:
     """Класс валидаторов для проверки входных данных"""
     
-    # Регулярные выражения
     TIME_PATTERN = re.compile(r'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$')
     EMAIL_PATTERN = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
     
@@ -137,23 +135,19 @@ class Validators:
             'sunday': 'Воскресенье'
         }
         
-        # Проверяем день
         if day_short not in day_map:
             return False, "Неверный день. Используйте: mon, tue, wed, thu, fri, sat, sun", None
         
-        # Проверяем формат времени
         if not Validators.validate_time_format(start_time):
             return False, "Неверный формат времени начала (используйте HH:MM)", None
         
         if not Validators.validate_time_format(end_time):
             return False, "Неверный формат времени окончания (используйте HH:MM)", None
         
-        # Проверяем временной диапазон
         time_valid, time_error = Validators.validate_time_range(start_time, end_time)
         if not time_valid:
             return False, time_error, None
         
-        # Проверяем статус
         if enabled not in ['on', 'off']:
             return False, "Статус должен быть 'on' или 'off'", None
         
@@ -199,10 +193,8 @@ class Validators:
         """
         Очищает текст от потенциально опасных символов и обрезает до максимальной длины
         """
-        # Убираем лишние пробелы
         sanitized = ' '.join(text.strip().split())
         
-        # Обрезаем до максимальной длины
         if len(sanitized) > max_length:
             sanitized = sanitized[:max_length-3] + "..."
         
@@ -213,8 +205,6 @@ class Validators:
         """
         Проверяет согласованность расписания (например, нет пересечений)
         """
-        # Здесь можно добавить более сложную логику проверки расписания
-        # Например, проверку на пересечение временных интервалов между днями
         
         enabled_days = [day for day, day_schedule in schedule.items() 
                        if day_schedule.get("enabled", False)]
@@ -222,7 +212,6 @@ class Validators:
         if not enabled_days:
             return False, "Хотя бы один день должен быть включен"
         
-        # Проверяем, что все включенные дни имеют валидное время
         for day in enabled_days:
             day_schedule = schedule[day]
             start_time = day_schedule.get("start")
@@ -288,7 +277,6 @@ class Validators:
             if not Validators.validate_email(text):
                 return False, "Неверный формат email"
         
-        # Проверка длины для текстовых полей
         if input_type == "text" and len(text) > 1000:
             return False, "Текст слишком длинный (макс. 1000 символов)"
         

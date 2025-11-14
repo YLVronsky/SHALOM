@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# __init__.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseniy
 
 from .keyboards import KeyboardManager
 from .validators import Validators

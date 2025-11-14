@@ -1,5 +1,4 @@
-# Copyright (c) 2025 Соловьев Иван, Усенко Евгений, Александров Арсений
-# keyboards.py
+# Copyright (c) 2025 Solovev Ivan, Usenko Evgeny, Alexandrov Arseniy
 
 from maxapi.utils.inline_keyboard import InlineKeyboardBuilder
 from maxapi.types import CallbackButton, LinkButton
@@ -17,8 +16,8 @@ class KeyboardManager:
             CallbackButton(text="➕ Добавить вопрос", payload="add_qa_hint")
         )
         builder.row(
-            CallbackButton(text="🎯 Запустить викторину", payload="start_quiz"),
-            CallbackButton(text="⏹ Остановить викторину", payload="stop_quiz")
+            CallbackButton(text="▶️ Запустить викторину", payload="start_quiz"),
+            CallbackButton(text="⏹️ Остановить викторину", payload="stop_quiz")
         )
         builder.row(
             CallbackButton(text="⚙️ Настройки", payload="settings"),
@@ -42,10 +41,10 @@ class KeyboardManager:
         builder = InlineKeyboardBuilder()
         builder.row(
             CallbackButton(text="▶️ Запустить", payload="start_quiz"),
-            CallbackButton(text="⏸ Пауза", payload="pause_quiz")
+            CallbackButton(text="⏸️ Пауза", payload="pause_quiz")
         )
         builder.row(
-            CallbackButton(text="⏹ Остановить", payload="stop_quiz"),
+            CallbackButton(text="⏹️ Остановить", payload="stop_quiz"),
             CallbackButton(text="⚙️ Настройки", payload="settings")
         )
         return builder.as_markup()
@@ -55,7 +54,7 @@ class KeyboardManager:
         """Клавиатура настроек"""
         builder = InlineKeyboardBuilder()
         builder.row(
-            CallbackButton(text="🎯 Дневная цель", payload="set_daily"),
+            CallbackButton(text="Дневная цель", payload="set_daily"),
             CallbackButton(text="⏰ Интервал", payload="set_interval")
         )
         builder.row(
@@ -182,7 +181,7 @@ class KeyboardManager:
                 builder.row(*row)
                 row = []
         
-        if row:  # Добавляем оставшиеся кнопки
+        if row: 
             builder.row(*row)
         
         return builder.as_markup()
@@ -192,7 +191,7 @@ class KeyboardManager:
         """Клавиатура быстрых действий"""
         builder = InlineKeyboardBuilder()
         builder.row(
-            CallbackButton(text="🎯 Викторина", payload="quick_quiz"),
+            CallbackButton(text="Викторина", payload="quick_quiz"),
             CallbackButton(text="📚 Вопросы", payload="quick_qa")
         )
         builder.row(
